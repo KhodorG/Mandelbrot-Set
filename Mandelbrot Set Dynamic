@@ -89,6 +89,9 @@ int main(int argc, char** argv) {
 
         // Output the time taken
         printf("Time taken: %f seconds\n", end - start);
+        
+        // output the communication time
+        printf("Communication time taken: %f seconds\n", comm_time)
     }
 
     // Finalize MPI
