@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
     double scale_real = 3.0 / WIDTH;
     double scale_imag = 3.0 / HEIGHT;
 
-    double start, end;
+    double start, end, comm_start, comm_end, comm_time;
 
     // Initialize MPI
     MPI_Init(&argc, &argv);
@@ -58,9 +58,17 @@ int main(int argc, char** argv) {
             }
         }
     }
+    // Record the start time of the communication
+    comm_start = MPI_Wtime();
 
     // Gather the local color arrays into the global color array
     MPI_Gather(local_color, local_height * WIDTH, MPI_INT, color, local_height * WIDTH, MPI_INT, 0, MPI_COMM_WORLD);
+    
+    // Record the end time of the communication
+    comm_end = MPI_Wtime();
+    
+    // Calculate the communication time
+    comm_time = comm_end - comm_start;
 
     // Get the end time
     end = MPI_Wtime();
